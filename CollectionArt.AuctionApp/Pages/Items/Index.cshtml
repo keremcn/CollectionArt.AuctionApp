@@ -1,0 +1,17 @@
+﻿@page
+@model CollectionArt.AuctionApp.Pages.Items.IndexModel
+@using CollectionArt.AuctionApp.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<AuctionAppResource> L
+@section scripts
+{
+    <abp-script src="/Pages/Items/Index.js" />
+}
+<abp-card>
+    <abp-card-header>
+        <h2>@L["Items"]</h2>
+    </abp-card-header>
+    <abp-card-body>
+        <abp-table striped-rows="true" id="ItemsTable"></abp-table>
+    </abp-card-body>
+</abp-card>
