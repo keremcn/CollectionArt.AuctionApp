@@ -3,6 +3,12 @@
   "texts": {
     "Welcome_Title": "Welcome",
     "Welcome_Text": "This is a minimalist, single layer application startup template for the ABP Framework.",
-    "Menu:Home": "Home"
+    "Menu:Home": "Home",
+    "Permission:AuctionApp": "AuctionApp",
+    "Permission:Items": "Item Management",
+    "Permission:Items.Create": "Creating new Items",
+    "Permission:Items.Edit": "Editing the Items",
+    "Permission:Items.Delete": "Deleting the Items"
+
   }
 }

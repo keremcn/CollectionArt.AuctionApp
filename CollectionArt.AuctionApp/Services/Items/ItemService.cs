@@ -4,6 +4,7 @@ using CollectionArt.AuctionApp.Entities.Items;
 using CollectionArt.AuctionApp.Services.Items.Dtos;
 using Volo.Abp.Domain.Repositories;
 using CollectionArt.AuctionApp.Localization;
+using CollectionArt.AuctionApp.Permissions;
 
 namespace CollectionArt.AuctionApp.Services.Items
 {
@@ -16,6 +17,11 @@ namespace CollectionArt.AuctionApp.Services.Items
         public ItemService(IRepository<Item, Guid> repository):base(repository) 
         {
             LocalizationResource = typeof(AuctionAppResource);
+            GetPolicyName = AuctionAppPermissions.Items.Default;
+            GetListPolicyName = AuctionAppPermissions.Items.Default;
+            CreatePolicyName = AuctionAppPermissions.Items.Create;
+            UpdatePolicyName = AuctionAppPermissions.Items.Edit;
+            DeletePolicyName = AuctionAppPermissions.Items.Delete;
         }
     }
 }

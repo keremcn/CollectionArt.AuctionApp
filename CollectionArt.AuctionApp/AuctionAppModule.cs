@@ -50,6 +50,8 @@ using Volo.Abp.UI.Navigation;
 using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using CollectionArt.AuctionApp.Permissions;
 
 namespace CollectionArt.AuctionApp;
 
@@ -167,6 +169,14 @@ public class AuctionAppModule : AbpModule
         ConfigureVirtualFiles(hostingEnvironment);
         ConfigureLocalization();
         ConfigureEfCore(context);
+
+        Configure<RazorPagesOptions>(options =>
+        {
+            options.Conventions.AuthorizePage("/Items/Index", AuctionAppPermissions.Items.Default);
+            options.Conventions.AuthorizePage("/Items/CreateModal", AuctionAppPermissions.Items.Create);
+            options.Conventions.AuthorizePage("/Items/EditModal", AuctionAppPermissions.Items.Edit);
+        });
+
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)

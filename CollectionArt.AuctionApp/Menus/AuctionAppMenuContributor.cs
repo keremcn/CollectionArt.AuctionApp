@@ -1,8 +1,12 @@
 ﻿using CollectionArt.AuctionApp.Localization;
+using CollectionArt.AuctionApp.Permissions;
+using Volo.Abp.Authorization.Permissions;
+using Volo.Abp.PermissionManagement;
 using Volo.Abp.TenantManagement.Web.Navigation;
 using Volo.Abp.UI.Navigation;
 
 namespace CollectionArt.AuctionApp.Menus;
+
 
 public class AuctionAppMenuContributor : IMenuContributor
 {
@@ -13,7 +17,7 @@ public class AuctionAppMenuContributor : IMenuContributor
             await ConfigureMainMenuAsync(context);
         }
     }
-
+ 
     private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
     {
         var administration = context.Menu.GetAdministration();
@@ -29,16 +33,19 @@ public class AuctionAppMenuContributor : IMenuContributor
                 order: 0
             )
         );
+
         context.Menu.AddItem(
-                new ApplicationMenuItem("AuctionMenu", l["Menu:Auction"], "/Auctions", icon: "fa fa-book",
-                order: 1));
+            new ApplicationMenuItem("AuctionMenu", l["Menu:Auction"], "/Auctions", icon: "fa fa-book",
+            order: 1)
+            .RequirePermissions(AuctionAppPermissions.Auctions.Default)
+
+            );
         context.Menu.AddItem(
                new ApplicationMenuItem("ItemMenu", l["Menu:Item"], "/Items", icon: "fa fa-book",
-               order: 2));
+               order: 2).RequirePermissions(AuctionAppPermissions.Items.Default)
 
-
-
-
+               );
+        
 
         if (AuctionAppModule.IsMultiTenant)
         {
