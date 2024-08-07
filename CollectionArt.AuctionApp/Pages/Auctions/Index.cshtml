@@ -3,13 +3,30 @@
 @using CollectionArt.AuctionApp.Localization
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<AuctionAppResource> L
+@using Microsoft.AspNetCore.Authorization
+@using CollectionArt.AuctionApp.Permissions
+@inject IAuthorizationService AuthorizationService
 @section scripts
 {
     <abp-script src="/Pages/Auctions/Index.js" />
 }
 <abp-card>
     <abp-card-header>
-        <h2>@L["Auctions"]</h2>
+        <abp-card-title>@L["Auctions"]</abp-card-title>
+        <abp-row>
+            <abp-column size-md="_6">
+             
+            </abp-column>
+            <abp-column size-md="_6" class="text-end">
+                @if (await AuthorizationService.IsGrantedAsync(AuctionAppPermissions.Auctions.Create))
+                {
+                    <abp-button id="NewAuctionButton"
+                                text="@L["NewAuction"].Value"
+                                icon="plus"
+                                button-type="Primary" />
+                }
+            </abp-column>
+        </abp-row>
     </abp-card-header>
     <abp-card-body>
         <abp-table striped-rows="true" id="AuctionsTable"></abp-table>

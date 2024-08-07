@@ -6,7 +6,7 @@ namespace CollectionArt.AuctionApp.Services.Auctions.Dtos
 {
     public class CreateUpdateAuctionDto
     {
-        [HiddenInput]
+        
         public Guid ItemId { get; set; }
         [HiddenInput]
         public Guid? WinnerId { get; set; }
@@ -22,7 +22,11 @@ namespace CollectionArt.AuctionApp.Services.Auctions.Dtos
         public DateTime EndDate { get; set; } = DateTime.Now.AddDays(1);
 
         [Required]
-        public decimal StartPrice { get; set; }
-        public decimal HighestOffer { get; set; } 
+        [DataType(DataType.Currency)]
+        public int StartPrice { get; set; }
+
+        [DataType(DataType.Currency)]
+        [HiddenInput]
+        public int HighestOffer { get; set; } 
     }
 }

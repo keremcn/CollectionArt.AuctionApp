@@ -1,6 +1,9 @@
 ﻿$(function () {
     var l = abp.localization.getResource('AuctionApp');
     var editModal = new abp.ModalManager(abp.appPath + 'Items/EditModal');
+
+    var createModalAuction = new abp.ModalManager(abp.appPath + 'Auctions/CreateModal');
+
     var dataTable = $('#ItemsTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
@@ -15,6 +18,13 @@
                     rowAction: {
                         items:
                             [
+                                {
+                                    text: l('StartAuction'),
+                                    action: function (data) {
+                                        createModalAuction.open({ id: data.record.id });
+                                    },
+                                    visible: abp.auth.isGranted('AuctionApp.Auctions.Create'), //CHECK for the PERMISSION
+                                },
                                 {
                                     text: l('Edit'),
                                     action: function (data) {
@@ -40,10 +50,10 @@
                             ]
                     }
                 },
-                //{
-                //    title: l('OwnerId'),
-                //    data: "ownerId"
-                //},
+                {
+                    title: l('Id'),
+                    data: "id"
+                },
                 //{
                 //    title: l('FirstOwnerId'),
                 //    data: "firstOwnerId"

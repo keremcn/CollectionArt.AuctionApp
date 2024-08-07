@@ -1,0 +1,19 @@
+﻿@page
+@using CollectionArt.AuctionApp.Localization
+@using CollectionArt.AuctionApp.Pages.Items
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Mvc.UI.Bootstrap.TagHelpers.Modal
+@model CollectionArt.AuctionApp.Pages.Auctions.EditModalModel
+@inject IStringLocalizer<AuctionAppResource> L
+@{
+    Layout = null;
+}
+<abp-dynamic-form abp-model="Auction" asp-page="/Auctions/CreateModal">
+    <abp-modal>
+        <abp-modal-header title="@L["NewItem"].Value"></abp-modal-header>
+        <abp-modal-body>
+            <abp-form-content />
+        </abp-modal-body>
+        <abp-modal-footer buttons="@(AbpModalButtons.Cancel|AbpModalButtons.Save)"></abp-modal-footer>
+    </abp-modal>
+</abp-dynamic-form>

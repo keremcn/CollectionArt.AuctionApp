@@ -11,11 +11,13 @@ namespace CollectionArt.AuctionApp.Services.Auctions
         AuctionDto,
         Guid,
         PagedAndSortedResultRequestDto,
-        CreateUpdateAuctionDto>,IAuctionService
+        CreateUpdateAuctionDto>, IAuctionService
     {
         public AuctionService(IRepository<Auction, Guid> repository) : base(repository)
         {
             LocalizationResource = typeof(AuctionAppResource);
         }
+
+       
     }
 }

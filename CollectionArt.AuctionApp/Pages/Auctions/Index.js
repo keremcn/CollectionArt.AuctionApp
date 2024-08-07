@@ -1,15 +1,46 @@
 ﻿$(function () {
     var l = abp.localization.getResource('AuctionAppResource');
-
+    var editModal = new abp.ModalManager(abp.appPath + 'Auctions/EditModal');
     var dataTable = $('#AuctionsTable').DataTable(
         abp.libs.datatables.normalizeConfiguration({
             serverSide: true,
             paging: true,
-            order: [[1, "asc"]],
+            order: [[4, "asc"]],
             searching: false,
             scrollX: true,
             ajax: abp.libs.datatables.createAjax(collectionArt.auctionApp.services.auctions.auction.getList),
             columnDefs: [
+                {
+                    title: l('Actions'),
+                    rowAction: {
+                        items:
+                            [
+                                {
+                                    text: l('Edit'),
+                                    action: function (data) {
+                                        editModal.open({ id: data.record.id });
+                                    },
+                                    visible: abp.auth.isGranted('AuctionApp.Auctions.Edit'), //CHECK for the PERMISSION
+                                },
+                                {
+                                    text: l('Delete'),
+                                    visible: abp.auth.isGranted('AuctionApp.Auctions.Delete'),
+                                    confirmMessage: function (data) {
+                                        return l('ItemDeletionConfirmationMessage', data.record.name);
+                                    },
+                                    action: function (data) {
+                                        collectionArt.auctionApp.services.auctions.auction
+                                            .delete(data.record.id)
+                                            .then(function () {
+                                                abp.notify.info(l('SuccessfullyDeleted'));
+                                                dataTable.ajax.reload();
+                                            });
+                                    }
+                                }
+
+                            ]
+                    }
+                },
                 {
                     title: l('StartPrice'),
                     data: "startPrice"
@@ -62,4 +93,21 @@
             ]
         })
     );
+
+
+    var createModal = new abp.ModalManager(abp.appPath + 'Auctions/CreateModal');
+
+    createModal.onResult(function () {
+        dataTable.ajax.reload();
+    });
+    editModal.onResult(function () {
+        dataTable.ajax.reload();
+    });
+
+
+    $('#NewAuctionButton').click(function (e) {
+        e.preventDefault();
+        createModal.open();
+    });
+
 });
